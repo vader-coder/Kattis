@@ -26,4 +26,4 @@ for i in range(len(digit1)):
     elif (digit1[i]>digit[i]):
         ans = num1Str
         break
-print(ans)
+print(ans.strip())
