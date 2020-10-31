@@ -44,10 +44,12 @@ void kattis() {
     Line* line;
     int testNum = stoi(tests);
     Line** lines = new Line*[testNum];
+    //Line lines[testNum];
     //calculate output 
     for (int testIndex = 0; testIndex < testNum; testIndex++) {
         getline(cin, test);
         line = new Line(test);  //    Line* list = new Line(input);
+        //Line line(test);
         line->buildOutputCharPtr();
         lines[testIndex] = line;
     }
@@ -60,7 +62,7 @@ void kattis() {
         delete lines[testIndex];
         lines[testIndex] = nullptr;
     }
-    line = nullptr;
+    //line = nullptr; doulbe free, possibly unnecessary
     delete lines;
     lines = nullptr;
 }
