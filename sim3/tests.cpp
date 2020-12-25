@@ -72,6 +72,43 @@ TEST(Empty) {
   CHECK_EQUAL("", str1);
   CHECK_EQUAL("", str2);
 }
+//1000000
+TEST(LongLine) {
+  char* test = new char[1000001];
+  for (int i=0; i<1000000; i++) {
+    test[i] = 'a';
+  }
+  test[1000000] = '\n';
+  string line(test);
+  LinkedList* list = parse(line);
+  char* ans = list->getStr();
+  string str(ans);
+  //cout << str<<endl;
+  CHECK_EQUAL(line, str);
+  list->deleteNodes();
+  delete list;
+  delete test;
+}
+
+TEST(EmptyDifferenceBetweenFrontAndMain) {
+  string line = "[a]bc[d";
+  LinkedList* list = parse(line);
+  char* ans = list->getStr();
+  string str(ans);
+  //cout << str<<endl;
+  CHECK_EQUAL("dabc", str);
+  list->deleteNodes();
+  delete list;
+
+  line = "a[]bc";
+  list = parse(line);
+  ans = list->getStr();
+  string str1(ans);
+  //cout << str<<endl;
+  CHECK_EQUAL("abc", str1);
+  list->deleteNodes();
+  delete list;
+}
 
 int main(int, const char *[]) {
    return UnitTest::RunAllTests();

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 #define NULL_TERMINATOR '\0'
 
@@ -59,7 +60,7 @@ class LinkedList {
             endList->head->previous = tail;
             tail = endList->tail;
             this->currentSize += endList->size();
-            delete endList;//hopefully won't delete the items.
+            delete endList;//don't delete the items.
         }
         void print() {
           this->mkStr();
@@ -103,13 +104,28 @@ class LinkedList {
                   current = next;
               }
           }
+          this->currentSize = 0;
         }
         void deleteCharStr() {
           if (this->strVersion != nullptr) {
             delete[] strVersion;
+            strVersion = nullptr;
           }
         }
 };
+
+void joinHandler(LinkedList** mainList, LinkedList** front) {
+  int frontSize = (*front)->size();
+  int mainSize = (*mainList)->size();
+  if (frontSize > 0 && mainSize > 0) {//both not empty
+    (*front)->join((*mainList));
+    *mainList = *front;
+    *front = new LinkedList();
+  } else if (frontSize > 0) {//main empty, front not.
+    *mainList = *front;
+    *front = new LinkedList();
+  }
+}
 
 LinkedList* parse(const string& str) {
     LinkedList* front = new LinkedList();
@@ -122,20 +138,12 @@ LinkedList* parse(const string& str) {
             }
         }
         else if (c == ']') {
-            if (front->size() > 0) {
-                front->join(mainList);
-                mainList = front;
-                front = new LinkedList();
-            }
-            current = mainList;
+          joinHandler(&mainList, &front);
+          current = mainList;
         }
         else if (c == '[') {
-            if (front->size() > 0) {
-                front->join(mainList);
-                mainList = front;
-                front = new LinkedList();
-            }
-            current = front;
+          joinHandler(&mainList, &front);
+          current = front;
         }
         else {
             current->append(c);

@@ -16,6 +16,9 @@ all: sim.cpp tests.cpp
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(TARGET).cpp
 	$(CXX) $(CXXFLAGS) -o $(TEST) $(TEST).cpp $(UNITTEST_LIB)
 
+total: total.cpp
+	$(CXX) $(CXXFLAGS) -o total total.cpp
+
 sim: sim.cpp
 	$(CXX) $(CXXFLAGS) -o $(TARGET) $(TARGET).cpp
 

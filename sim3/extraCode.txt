@@ -1,0 +1,10 @@
+/*int frontSize = front->size();
+int mainSize = mainList->size();
+if (frontSize > 0 && mainSize > 0) {//both not empty
+  front->join(mainList);
+  mainList = front;
+  front = new LinkedList();
+} else if (frontSize > 0) {//main empty, front not.
+  mainList = front;
+  front = new LinkedList();
+}*/
